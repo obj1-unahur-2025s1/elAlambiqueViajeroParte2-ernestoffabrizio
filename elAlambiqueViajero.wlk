@@ -17,6 +17,7 @@ object luke{
 }
 
 object alambiqueVeloz {
+    const velocidad = 12
     var rapido = true
     var combustible = 20
     const consumoPorViaje = 10
@@ -27,6 +28,9 @@ object alambiqueVeloz {
     }
     method rapido() = rapido
     method patenteValida() = patente.head() == "A"
+    method velocidad(){
+        return(velocidad)
+    }
 }
 
 object paris{
@@ -55,16 +59,20 @@ object lasVegas{
 }
 
 object antigualla {
+    const velocidad = 6
     var gangsters = 7
     method puedeFuncionar() = gangsters.even()
     method rapido() = gangsters > 6
     method desgaste(){
         gangsters = gangsters -1
     }
-    method patenteValida() = chatarra.rapido() 
-
+    method patenteValida() = chatarra.rapido()
+    method velocidad(){
+        return(velocidad)
+    } 
 }
 object chatarra {
+    const velocidad = 4
     var cañones = 10
     var municiones = "ACME"
     method puedeFuncionar() = municiones == "ACME" and cañones.between(6,12)
@@ -76,10 +84,13 @@ object chatarra {
     }
     method patenteValida() = municiones.take(4) == "ACME" 
     method cañones() = cañones
-
+    method velocidad(){
+        return(velocidad)
+    } 
 }
 
 object convertible{
+    const velocidad = 10
     var convertido = antigualla
     method puedeFuncionar() = convertido.puedeFuncionar() 
     method rapido() = convertido.rapido()
@@ -90,6 +101,9 @@ object convertible{
         convertido = vehiculo
     }
     method patenteValida() = convertido.patenteValida()
+    method velocidad(){
+        return(velocidad)
+    } 
  
 }
 
@@ -101,8 +115,46 @@ object hurlingham{
 
 
 object moto{
+    const velocidad = 15
     method rapido() = true
-    method puedeFuncionar() = not moto.rapido()
+    method puedeFuncionar() = not self.rapido()
     method desgaste() { }
     method patenteValida() = false
+    method velocidad(){
+        return(velocidad)
+    } 
+}
+object centroInscripcion{
+    var vehiculos = #{}
+    const pendientes = #{}
+    var vehiculosAux = #{}
+    var ciudad = paris
+    method puedeCompetirEn(unVehiculo){
+            return(ciudad.puedeLlegar(unVehiculo))
+    }
+    method añadirVehiculoParaCompetir(unVehiculo){
+        if (self.puedeCompetirEn(unVehiculo)){
+            vehiculos.add(unVehiculo)
+        }
+        else{
+            pendientes.add(unVehiculo)
+        }
+    }
+    method cambiarCiudadA(unaCiudad){
+        ciudad = unaCiudad
+        vehiculosAux = vehiculos
+        vehiculos = #{}
+        vehiculosAux.forEach({x => self.añadirVehiculoParaCompetir(x)})
+        pendientes.forEach({x => self.añadirVehiculoParaCompetir(x)})
+    }
+    method realizarCarrera(){
+        vehiculos.forEach(
+            {x => luke.vehiculo(x) 
+            luke.viajar(ciudad)}
+            )
+        return(vehiculos.max({x=>x.velocidad()}))
+    }
+    method vehiculosAceptados(){
+        return(vehiculos)
+    }
 }
