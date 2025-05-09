@@ -61,12 +61,16 @@ test "luke viaja a hurlingham en el convertible convertido en chatarra" {
   assert.equals("sticker de la Unahur",luke.recuerdo())
   assert.equals(5,chatarra.cañones())
   }
-test "carrera1"{
+test "carrera en buenos aires"{
     centroInscripcion.añadirVehiculoParaCompetir(alambiqueVeloz)
     centroInscripcion.añadirVehiculoParaCompetir(antigualla)
     centroInscripcion.añadirVehiculoParaCompetir(chatarra)
     centroInscripcion.añadirVehiculoParaCompetir(convertible)
-    centroInscripcion.añadirVehiculoParaCompetir(moto)
+    convertible.convertir(moto)
+    centroInscripcion.añadirVehiculoParaCompetir(antiguallaBlindada)
+    centroInscripcion.añadirVehiculoParaCompetir(elSuperPerrari)
+    centroInscripcion.añadirVehiculoParaCompetir(superConvertible)
     centroInscripcion.cambiarCiudadA(buenosAires)
-    assert.equals(centroInscripcion.realizarCarrera(), moto)
+    assert.equals(elSuperPerrari.velocidad(), 8)
+    assert.equals(centroInscripcion.realizarCarrera(), alambiqueVeloz)
 }

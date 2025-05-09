@@ -158,3 +158,57 @@ object centroInscripcion{
         return(vehiculos)
     }
 }
+
+object antiguallaBlindada{
+    const gangsters = ["Hola","Mundo","Wollok"]
+    method velocidad(){
+        return(gangsters.fold(0,{acum,item=>acum+item.length()}))
+    }
+    method puedeFuncionar() { 
+        return(gangsters.fold(0,{acum,item=>acum+item.length()}).even())
+    }
+    method rapido() { 
+        return(gangsters.size() > 6)
+    }
+}
+object elSuperPerrari{
+    const velocidad = 80
+    var trampas = 4
+    method añadirTrampas(unaCantidad){
+        trampas = trampas + unaCantidad
+    }
+    method desgaste(){
+        return(velocidad / trampas)
+    }
+    method velocidad(){
+        return((velocidad / self.desgaste())*2)
+    }
+    method puedeFuncionar(){
+        return(self.velocidad().even())
+    }
+    method rapido(){
+        return(self.velocidad() > 7)
+    }
+}
+
+object superConvertible{
+    const velocidad = 10
+    const vehiculosPosibles = #{elSuperPerrari, antiguallaBlindada, moto, chatarra, alambiqueVeloz}
+    var convertido = vehiculosPosibles.anyOne()
+    method convertirA(unVehiculo){
+        convertido = unVehiculo
+    }
+    method puedeFuncionar() = convertido.puedeFuncionar() 
+    method rapido() = convertido.rapido()
+    method desgaste(){
+        convertido.desgaste()
+    }
+    method convertir(vehiculo){
+        convertido = vehiculo
+    }
+    method patenteValida() = convertido.patenteValida()
+    method velocidad(){
+        return(velocidad)
+    } 
+ 
+}
